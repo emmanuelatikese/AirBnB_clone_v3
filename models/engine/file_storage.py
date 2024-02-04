@@ -71,10 +71,13 @@ class FileStorage:
 
     def get(self, cls, id):
         '''We getting what's needed'''
-        if type(cls) == str and type(id) == str:
-            return self.__objects.get(cls + '.' + id, None)
-        else:
-            return None
+        print(self.all(cls), type(cls))
+        if type(id) == str:
+            for k, v in self.all(cls).items():
+                if k.split('.')[1] == id:
+                    return v
+                else:
+                    return None
 
     def count(self, cls=None):
         ''' justing counting'''
