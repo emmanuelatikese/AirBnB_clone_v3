@@ -106,10 +106,9 @@ class TestFileStorage(unittest.TestCase):
         add = DBStorage()._DBStorage__objects
         test_dict = {}
         for key, value in classes.items():
-            with self.subTest(key, value):
-                inst = value()
-                inst_key = value.__class__.__name__ + '.' + inst.id
-                test_dict[inst_key] = inst
+            inst = value()
+            inst_key = value.__class__.__name__ + '.' + inst.id
+            test_dict[inst_key] = inst
         DBStorge()._DBStorage__objects = {}
         db_s.save()
         DBStorage()._DBStorage__objects = add
