@@ -110,11 +110,11 @@ class TestFileStorage(unittest.TestCase):
             inst_key = value.__class__.__name__ + '.' + inst.id
             test_dict[inst_key] = inst
         DBStorge()._DBStorage__objects = {}
-        db_s.save()
+        db_call.save()
         DBStorage()._DBStorage__objects = add
         for key, val in test_dict.items():
             test_dict[key] = val.to_dict()
-        str_json = json.dump(test_dict)
+        str_json = json.dumps(test_dict)
         with open('file.json', r) as f:
             ans = f.read()
         self.assertEqual(json.loads(str_json), ans.loads())
