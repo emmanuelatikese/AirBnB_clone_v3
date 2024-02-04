@@ -73,10 +73,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
-        db_call = DBStorage()
-        dict_new = db_call.all()
-        self.assertIs(type(db_call), dict)
-        self.assertEqual(dict_new, DBStorage().DBStorage__objects)
+        self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
@@ -101,3 +98,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        os.remove('file.json')
+        db_call = DBStorage()
+        add = DBStorage()._DBStorage__objects
+        test_dict = {}
+        for key, value in classes.items():
+            inst = value()
+            inst_key = value.__class__.__name__ + '.' + inst.id
+            test_dict[inst_key] = inst
+        DBStorge()._DBStorage__objects = {}
+        db_call.save()
+        DBStorage()._DBStorage__objects = add
+        for key, val in test_dict.items():
+            test_dict[key] = val.to_dict()
+        str_json = json.dumps(test_dict)
+        with open('file.json', r) as f:
+            ans = f.read()
+        self.assertEqual(json.loads(str_json), ans.loads())
