@@ -76,12 +76,13 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls=None):
-	''' This is all about getting'''
-    	obj_ = classes.get(cls, None)
-	if obj_:
-    		return self.__session.query(obj_).filter(obj_.id == id)
-	else:
-		return None
+        ''' This is all about getting'''
+        obj_ = classes.get(cls, None)
+        if obj_:
+            return self.__session.query(obj_).filter(obj_.id == id)
+        else:
+            return None
+
     def count(self, cls=None):
-	''' This is to count '''
-	return len(self.all())
+        ''' This is to count len'''
+        return len(self.all())

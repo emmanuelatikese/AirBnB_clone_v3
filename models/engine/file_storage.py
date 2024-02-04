@@ -70,11 +70,12 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-	'''We getting what's needed'''
-	if type(cls) == str and type(id) == str:
-		return self.__objects.get(cls + '.' + id, None)
-	else:
-		return None
+        '''We getting what's needed'''
+        if type(cls) == str and type(id) == str:
+            return self.__objects.get(cls + '.' + id, None)
+        else:
+            return None
+
     def count(self, cls=None):
-	''' justing counting'''
-	return len(self.all(cls))
+        ''' justing counting'''
+        return len(self.all(cls))
