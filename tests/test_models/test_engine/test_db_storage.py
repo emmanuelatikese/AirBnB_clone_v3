@@ -88,11 +88,11 @@ class TestFileStorage(unittest.TestCase):
 	dict_test = {}
 	for key, value in classes.items():
 		with self.subTest(key, value):
-			inst = Value()
-			inst_key = Value.__class__.__name__ + '.' + inst.id
-			db_s.new(inst)
-			dict_test[inst_key] = inst
-			self.assertEqual(dict_test, DBStorage()._DStorage__objects)
+		    inst = Value()
+		    inst_key = Value.__class__.__name__ + '.' + inst.id
+		    db_s.new(inst)
+		    dict_test[inst_key] = inst
+		    self.assertEqual(dict_test, DBStorage()._DStorage__objects)
 		DBStorage()._DStorage__objects = add
 		
 	
