@@ -75,7 +75,7 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-    def get(self, cls=None):
+    def get(self, cls, id):
         ''' This is all about getting'''
         obj_ = classes.get(cls, None)
         if obj_:
