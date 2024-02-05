@@ -18,17 +18,13 @@ def status_json():
     return jsonify({"status": "OK"}), 200
 
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"Amenities": Amenity, "Cities": City, "Places": Place,
+           "Reviews": Review, "States": State, "Users": User}
 
 
 @app_views.route('/stats', strict_slashes=False)
 def stat():
-    new_dict = {"amenities": storage.count(Amenity),
-                "cities": storage.count(City),
-                "places": storage.count(Place),
-                "reviews": storage.count(Review),
-                "states": storage.count(State),
-                "users": storage.count(User)
-                }
+    new_dict = {}
+    for k, v in classes.items():
+        new_dict[k.lower()] = storage.count(v)
     return jsonify(new_dict)
