@@ -12,15 +12,20 @@ def amenity_handler(amenity_id=''):
     id_amen = 'Amenity.' + amenity_id if amenity_id else ''
     all_amen = storage.all(Amenity)
     if request.method == 'GET':
-        if amenity_id:
-            return jsonify(all_amen[id_amen].to_dict()) if all_amen[id_amen] else abort(404)
+        if amenity_id and all_amen.get(id_amen):
+            return jsonify(all_amen[id_amen].to_dict())
+        else:
+            abort(404)
         return jsonify([v.to_dict() for v in all_amen.values()])
     if request.method == 'DELETE':
-        return jsonify({}), 200 if all_amen[id_amen] else abort(404)
+        if all_amen.get(id_amen):
+            return jsonify({}), 200
+        else:
+            abort(404)
     if request.method == 'POST':
         if request.is_json:
             new_inst = request.get_json()
-            if new_inst['name']:
+            if new_inst.get('name'):
                 new_amen = Amenity(new_inst)
                 storage.new(new_amen)
                 storage.save()
