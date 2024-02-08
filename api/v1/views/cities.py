@@ -41,16 +41,16 @@ def cityhandler(state_id='', city_id=''):
             abort(404)
         if request.is_json:
             json_get = request.get_json()
+            if json_get['name']:
+                json_get['state_id'] = state_id
+                new_inst = City(**json_get)
+                storage.new(new_inst)
+                storage.save()
+                return jsonify(new_inst.to_dict()), 201
+            else:
+                abort(400, 'Missing name')
         else:
             abort(400, "Not a JSON")
-        if json_get['name']:
-            json_get['state_id'] = state_id
-            new_inst = City(**json_get)
-            storage.new(new_inst)
-            storage.save()
-            return jsonify(new_inst.to_dict()), 201
-        else:
-            abort(400, 'Missing name')
 
     if request.method == "PUT":
         if k not in all_cities:
