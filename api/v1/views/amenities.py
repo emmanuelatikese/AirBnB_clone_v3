@@ -19,7 +19,7 @@ def amenity_handler(amenity_id=''):
         return jsonify({}), 200 if all_amen[id_amen] else abort(404)
     if request.method == 'POST':
         if request.is_json:
-            new_inst = request.get_json
+            new_inst = request.get_json()
             if new_inst['name']:
                 new_amen = Amenity(new_inst)
                 storage.new(new_amen)
@@ -36,7 +36,7 @@ def amenity_handler(amenity_id=''):
                 new_json = all_amen[id_amen]
                 for k, v in new_dict.items():
                     if k != 'id' and k != 'created_at' and k != 'updated_at':
-                        setattr(State, k, v)
+                        setattr(Amenity, k, v)
                 storage.save()
                 return jsonify(new_json.to_dict()), 200
             else:
