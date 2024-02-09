@@ -44,10 +44,10 @@ def handleramenity(amenity_id=''):
                 new_dict = request.get_json()
             else:
                 abort(404, 'Not a JSON')
-	    new_json = all_amen.get(id_amen)
-                for k, v in new_dict.items():
-                    if k != 'id' and k != 'created_at' and k != 'updated_at':
-                        setattr(new_json, k, v)
+            new_json = all_amen.get(id_amen)
+            for k, v in new_dict.items():
+                if k != 'id' and k != 'created_at' and k != 'updated_at':
+                    setattr(new_json, k, v)
             storage.save()
             return jsonify(new_json.to_dict()), 200
         else:
