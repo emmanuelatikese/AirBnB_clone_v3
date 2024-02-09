@@ -16,7 +16,7 @@ def base_id(state_id=None):
     if request.method == "GET":
         if state_id:
             try:
-                k = 'State'+'.' + state_id
+                k = 'State'+'.' + escape(state_id)
                 return jsonify(get_all[k].to_dict())
             except KeyError:
                 abort(404)
