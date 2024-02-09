@@ -29,15 +29,15 @@ def handleramenity(amenity_id=''):
     if request.method == 'POST':
         if request.is_json:
             new_inst = request.get_json()
-            if new_inst.get('name'):
-                new_amen = Amenity(**new_inst)
-                storage.new(new_amen)
-                storage.save()
-                return jsonify(new_amen.to_dict()), 201
-            else:
-                abort(404, 'Missing name')
         else:
             abort(404, 'Not a JSON')
+        if new_inst.get('name'):
+            new_amen = Amenity(**new_inst)
+            storage.new(new_amen)
+            storage.save()
+            return jsonify(new_amen.to_dict()), 201
+        else:
+            abort(404, 'Missing name')
     if request.method == 'PUT':
         if amenity_id and all_amen[id_amen]:
             if request.is_json:
