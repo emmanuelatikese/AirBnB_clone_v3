@@ -19,9 +19,9 @@ def handleramenity(amenity_id=''):
                 abort(404)
         return jsonify([v.to_dict() for v in all_amen.values()])
     if request.method == 'DELETE':
-        if all_amen.get(id_amen):
+        try:
             return jsonify({}), 200
-        else:
+        except KeyError:
             abort(404)
     if request.method == 'POST':
         if request.is_json:

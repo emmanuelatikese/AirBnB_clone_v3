@@ -37,7 +37,7 @@ def base_id(state_id=None):
             json_get = request.get_json()
         else:
             abort(400, "Not a JSON")
-        if json_get['name']:
+        if json_get.get('name'):
             new_inst = State(**json_get)
             storage.new(new_inst)
             storage.save()
