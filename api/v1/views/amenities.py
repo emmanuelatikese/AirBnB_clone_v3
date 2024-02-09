@@ -42,13 +42,13 @@ def handleramenity(amenity_id=''):
         if amenity_id and all_amen[id_amen]:
             if request.is_json:
                 new_dict = request.get_json()
-                new_json = all_amen.get(id_amen)
+            else:
+                abort(404, 'Not a JSON')
+	    new_json = all_amen.get(id_amen)
                 for k, v in new_dict.items():
                     if k != 'id' and k != 'created_at' and k != 'updated_at':
                         setattr(new_json, k, v)
-                storage.save()
-                return jsonify(new_json.to_dict()), 200
-            else:
-                abort(404, 'Not a JSON')
+            storage.save()
+            return jsonify(new_json.to_dict()), 200
         else:
             abort(404)
