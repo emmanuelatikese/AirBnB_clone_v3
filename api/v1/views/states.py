@@ -55,7 +55,7 @@ def base_id(state_id=None):
                 abort(400, "Not a JSON")
             for k, v in json_get.items():
                 if k != 'id' and k != 'created_at' and k != 'updated_at':
-                    setattr(State, k, v)
+                    setattr(new, k, v)
             storage.save()
             return jsonify(new.to_dict()), 200
         except KeyError:

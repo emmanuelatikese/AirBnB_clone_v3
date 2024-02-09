@@ -63,7 +63,7 @@ def cityhandler(state_id='', city_id=''):
             new_inst = all_cities[k]
             for k, v in json_get.items():
                 if k != 'id' and k != 'created_at' and k != 'updated_at':
-                    setattr(City, k, v)
+                    setattr(new_inst, k, v)
             storage.save()
             return jsonify(new_inst.to_dict()), 200
         except KeyError:

@@ -6,16 +6,17 @@ from models.amenity import Amenity
 from api.v1.views import app_views
 
 
-@app_views.route('/api/v1/amenities', methods=['GET', 'POST', ], strict_slashes=False)
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
-def amenity_handler(amenity_id=''):
+@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+def handleramenity(amenity_id=''):
     id_amen = 'Amenity.' + amenity_id if amenity_id else ''
     all_amen = storage.all(Amenity)
     if request.method == 'GET':
-        if amenity_id and all_amen.get(id_amen):
-            return jsonify(all_amen[id_amen].to_dict())
-        else:
-            abort(404)
+        if amenity_id:
+            try:
+                return jsonify(all_amen.get(id_amen).to_dict())
+            except keyError:
+                abort(404)
         return jsonify([v.to_dict() for v in all_amen.values()])
     if request.method == 'DELETE':
         if all_amen.get(id_amen):
@@ -26,7 +27,7 @@ def amenity_handler(amenity_id=''):
         if request.is_json:
             new_inst = request.get_json()
             if new_inst.get('name'):
-                new_amen = Amenity(new_inst)
+                new_amen = Amenity(**new_inst)
                 storage.new(new_amen)
                 storage.save()
                 return jsonify(new_amen.to_dict()), 201
@@ -41,7 +42,7 @@ def amenity_handler(amenity_id=''):
                 new_json = all_amen[id_amen]
                 for k, v in new_dict.items():
                     if k != 'id' and k != 'created_at' and k != 'updated_at':
-                        setattr(Amenity, k, v)
+                        setattr(new_json, k, v)
                 storage.save()
                 return jsonify(new_json.to_dict()), 200
             else:
