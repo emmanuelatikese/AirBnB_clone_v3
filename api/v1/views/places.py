@@ -23,7 +23,7 @@ def place_handler(place_id='', city_id='', user_id=''):
         if city_id:
             if not get_city.get(id_city):
                 abort(404)
-            return jsonify([v.to_dict() for v in get_city.values() if id_city == v.city_id])
+            return jsonify([v.to_dict() for v in get_place.values() if id_city == v.city_id])
         if place_id:
             if not get_place.get(id_place):
                 abort(404)
