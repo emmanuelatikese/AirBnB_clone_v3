@@ -29,7 +29,7 @@ def handler_review(place_id='', review_id=''):
                 abort(404)
             ans = all_rev.get(id_rev)
             return jsonify(ans.to_dict())
-    if request.metod == 'DELETE':
+    if request.method == 'DELETE':
         if not all_rev.get(id_rev):
             abort(404)
         ans = all_rev.get(id_rev)
