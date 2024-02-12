@@ -8,10 +8,8 @@ from models.review import Review
 from models.place import Place
 from markupsafe import escape
 
-app_views.route('/places/<place_id>/reviews', methods=['GET', 'POSt'])
-app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'])
-
-
+@app_views.route('/places/<place_id>/reviews', methods=['GET', 'POSt'])
+@app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'])
 def handler_review(place_id='', review_id=''):
     all_rev = storage.all(Review)
     all_place = storage.all(Place)
