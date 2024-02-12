@@ -11,9 +11,9 @@ from models.review import Review
 
 #print(storage.all(Amenity))
 #print(storage.all(Amenity).get('Amenity.2480a4f0-ccc6-4c29-9f84-3ce70614cb4a'))
-print(storage.all(Review))
+#print(storage.all(Review))
 
-
+print(storage.all(City))
 
 #print("All objects: {}".format(storage.count()))
 #print("State objects: {}".format(storage.count(State)))
