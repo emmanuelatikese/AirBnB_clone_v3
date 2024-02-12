@@ -21,7 +21,11 @@ def handler_review(place_id='', review_id=''):
         if place_id:
             if not all_place.get(id_pl):
                 abort(404)
-            return jsonify([v.to_dict() for v in all_rev.values() if v.place_id == place_id])
+            empt = []
+            for v in all_rev.values():
+                if v.place_id == place_id:
+                    empt.append(v.to_dict())
+            return jsonify(empt)
         if review_id:
             if not all_rev.get(id_rev):
                 abort(404)
