@@ -55,3 +55,27 @@ def place_amenities_handler(place_id='', amenity_id=''):
             dict_amen.remove(amen.id)
             storage.save()
             return jsonify({}), 200
+    if request.method == "POST":
+        if not all_pls.get(id_pls):
+            abort(404)
+        if not all_amen.get(id_amen):
+            abort(404)
+        amen = all_amen.get(id_amen)
+        pls = all_pls.get(id_pls)
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            if not amen in pls.amenities:
+                pls.amenities.append(amen)
+                storage.save()
+                return jsonify(amen.to_dict()), 201
+            else:
+                return jsonify(amen.to_dict()), 200
+        else:
+            pls_dict = pls.to_dict()
+            dict_amen = pls_dict.get('amenity_ids')
+            if not amen.id in dict_amen:
+                dict_amen.append(amen.id)
+                pls_dict['amenity_ids'] = dict_amen
+                storage.save()
+                return jsonify(amen.to_dict()), 201
+            else:
+                return jsonify(amen.to_dict()), 200
